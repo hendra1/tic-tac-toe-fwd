@@ -5,7 +5,7 @@ $(document).ready(function() {
     var o_win = 0;
     var x_win = 0;
     var matrixCombination = [
-      [1,2,3],[1,5,9],[1,4,7]
+      [1,2,3],[1,5,9],[1,4,7],
       [2,5,8],[3,5,7],[3,6,9],
       [4,5,6],[7,8,9]
     ];
@@ -32,10 +32,8 @@ $(document).ready(function() {
       }
 
     function check(x, isX) {
-      if(x.length > 2){ 
-        if (x.includes(1) && x.includes(2) && x.includes(3) || x.includes(1) && x.includes(5) && x.includes(9) || x.includes(1) && x.includes(4) && x.includes(7) ||  
-            x.includes(2) && x.includes(5) && x.includes(8) || x.includes(3) && x.includes(5) && x.includes(7) || x.includes(3) && x.includes(6) && x.includes(9) || 
-            x.includes(4) && x.includes(5) && x.includes(6) || x.includes(7) && x.includes(8) && x.includes(9)){        
+      if(x.length > 2){    
+        if (formula(x)){        
             if (isX) {                            
                 x_win++
                 $('#x_win').text(x_win)
@@ -49,6 +47,23 @@ $(document).ready(function() {
       }
     }
 
+    function formula(x){
+      var isValid=false;ex=0;
+      for(let ct =0; ct < matrixCombination.length; ct++){
+        let ex=0;
+        for(let ctr = 0; ctr < 3; ctr++){
+          for(let c=0; c < x.length; c++){               
+            if(matrixCombination[ct][ctr] === x[c]){
+              ex++
+            }
+            if(ex===3){
+              return true;
+            }
+          }
+        }
+      }
+      return false;
+    }
     
     function reset(x) {
         movesX = [];
