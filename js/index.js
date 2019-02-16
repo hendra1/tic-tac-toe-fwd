@@ -1,59 +1,58 @@
 $(document).ready(function() {
-    var movesA, movesB;
+    var movesX, movesO;
     var x = "x"
     var o = "o"
     var o_win = 0;
     var x_win = 0;
-    var is_end=false;
-
-    //reset()
+    var matrixCombination = [
+      [1,2,3],[1,5,9],[1,4,7]
+      [2,5,8],[3,5,7],[3,6,9],
+      [4,5,6],[7,8,9]
+    ];
+    reset()
     function clicked(x) {
-        if(is_end){return;}
           if (document.getElementById("game").children[x - 1].textContent === "X" || document.getElementById("game").children[x - 1].textContent === "O") {
               return;
           }
           var box = document.getElementById("game").children[x - 1];
           box.classList.add('disable')
-          if ((movesA.length + movesB.length) % 2 === 0) {
+          if ((movesX.length + movesO.length) % 2 === 0) {
               box.textContent = "X";          
               box.classList.add(x)
               box.classList.add('btn-info')
-              movesA.push(x);
-              check(movesA, true);
+              movesX.push(x);
+              check(movesX, true);
           } else {
               box.textContent = "O";
               box.classList.add(o)
               box.classList.add('btn-primary')
-              movesB.push(x);
-              check(movesB);
+              movesO.push(x);
+              check(movesO);
           }
       }
 
-    function check(x, y) {
+    function check(x, isX) {
+      if(x.length > 2){ 
         if (x.includes(1) && x.includes(2) && x.includes(3) || x.includes(1) && x.includes(5) && x.includes(9) || x.includes(1) && x.includes(4) && x.includes(7) ||  
             x.includes(2) && x.includes(5) && x.includes(8) || x.includes(3) && x.includes(5) && x.includes(7) || x.includes(3) && x.includes(6) && x.includes(9) || 
-            x.includes(4) && x.includes(5) && x.includes(6) || x.includes(7) && x.includes(8) && x.includes(9)){
-            //document.getElementById("map").setAttribute("style", "height:370px;")
-            if (y) {
-                //document.getElementById("map").innerHTML += '<p>Cross Wins!</p>';
-                alert('X wins has won the game. Start a new game')
+            x.includes(4) && x.includes(5) && x.includes(6) || x.includes(7) && x.includes(8) && x.includes(9)){        
+            if (isX) {                            
                 x_win++
                 $('#x_win').text(x_win)
-                reset();
             } else {
-                //document.getElementById("map").innerHTML += '<p>Circle Wins!</p>';
-                alert('O has won the game. Start a new game')         
                 o_win++
                 $('#o_win').text(o_win)
             }
-            is_end=true;
+            alert((isX?'X':'O')+' has won the game. Start a new game')
             reset();
         }
+      }
     }
+
     
     function reset(x) {
-        movesA = [];
-        movesB = [];
+        movesX = [];
+        movesO = [];
         is_end=false;
         $("#game li").text("+");
         $("#game li").removeClass('disable')
@@ -63,7 +62,7 @@ $(document).ready(function() {
         $("#game li").removeClass('btn-info')     
     }
 
-    $('#game li').click(function(val){
+    $('#game li').click(function(val){  
       clicked(parseInt(this.id))  
     });
     
