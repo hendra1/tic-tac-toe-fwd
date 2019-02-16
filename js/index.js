@@ -51,16 +51,15 @@ $(document).ready(function() {
       var isValid=false;ex=0;
       for(let ct =0; ct < matrixCombination.length; ct++){
         let ex=0;
-        for(let ctr = 0; ctr < 3; ctr++){
+        //for(let ctr = 0; ctr < 3; ctr++){
           for(let c=0; c < x.length; c++){               
-            if(matrixCombination[ct][ctr] === x[c]){
+            //if(matrixCombination[ct][ctr] === x[c]){
+            if(matrixCombination[ct].includes(x[c])){  
               ex++
             }
-            if(ex===3){
-              return true;
-            }
+            if(ex===3) return true;          
           }
-        }
+        //}
       }
       return false;
     }
